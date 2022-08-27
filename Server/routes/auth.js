@@ -10,12 +10,11 @@ const router = Router();
 const User = require('../models/User');
 
 
-// Create a user using POST at "/api/auth/". Doesnt require auth
+// Create a user using POST at "/api/auth/createuser". Doesnt require auth
 
-router.post('/', (req, res)=>{
+router.post('/createuser', (req, res)=>{
     console.log(req.body);
     const user = User(req.body);
-    // user.insertOne();
     user.save();
     res.json(req.body);
 })
