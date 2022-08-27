@@ -9,9 +9,7 @@ const port = 3000
 
 app.use(express.json())
 
-// app.get('/', (req, res) => {
-//   res.send('Hello World! this is notes project')
-// });
+// Creating Routes for each different paths
 app.use('/api/auth', require('./routes/auth'));
 app.use('/api/notes', require('./routes/notes'));
 
