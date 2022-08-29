@@ -92,7 +92,17 @@ async(req, res)=>{
             res.status(400).json({error : "Enter correct credentials!!!"})
         }
 
-        
+        // Creating a Authentication Token
+        const data ={
+            user:{
+                id :user.id
+            }
+        }
+        console.log(data);
+        const authToken = jwt.sign(data, process.env.JWT_SECRET)
+
+        // Send the AuthToken to the User
+        res.json({authToken});
 
 
 
