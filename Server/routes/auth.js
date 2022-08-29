@@ -10,6 +10,7 @@ const router = Router();
 const User = require('../models/User');
 const { body, validationResult } = require('express-validator');
 const bcrypt = require('bcryptjs');
+const jwt = require('jsonwebtoken');
 
 
 // Create a user using POST at "/api/auth/createuser". Doesnt require auth
@@ -33,17 +34,27 @@ async(req, res)=>{
         }
 
         // Once detail validation is done, we go on to encrypt the password and store the new encrypted password on the database using salt and hash function.
-        let salt = bcrypt.genSaltSync(10);
-        console.log(salt);
-        let hash = bcrypt.hashSync(req.body.password, salt);
-
+        let salt = await bcrypt.genSalt(10);
+        let hash = await bcrypt.hash(req.body.password, salt);
+        
         // creating the user in the database
-        User.create({
+        user = await User.create({
             name: req.body.name,
             email : req.body.email,
             password: hash
-        })
-        .then(user => res.json(user));
+        });
+        
+        // Creating a Authentication Token
+        const data ={
+            user:{
+                id : user.id
+            }
+        }
+        const authToken = jwt.sign(data, process.env.JWT_SECRET)
+        // console.log(data);
+
+        // Send the AuthToken to the User
+        res.json({authToken});
         
     } catch (err) {
         return res.status(500).json({ error: err.message})
@@ -52,5 +63,11 @@ async(req, res)=>{
     
     
 });
+
+
+// Create a user using POST at "/api/auth/createuser". Doesnt require login
+
+
+
 
 module.exports = router
