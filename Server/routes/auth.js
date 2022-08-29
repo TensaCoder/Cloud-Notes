@@ -65,9 +65,42 @@ async(req, res)=>{
 });
 
 
-// Create a user using POST at "/api/auth/createuser". Doesnt require login
+// Create a user using POST at "/api/auth/login". Doesnt require login
+
+router.post('/login', 
+[
+    body('email', "Enter a valid Email ID").isEmail(),
+    body('password', "Password cannot be blank!!!").exists()
+], 
+async(req, res)=>{
+    const errors = validationResult(req);
+    if (!errors.isEmpty()) {
+      return res.status(400).json({ errors: errors.array() });
+    }
+    let {email, password} = req.body;
+
+    try {
+        // Check to see if the user exists in the Database
+        let user = await User.findOne({email});
+        if (!user){
+            return res.status(500).json({error : "Enter correct credentials!!!"})
+        }
+
+        // Now check if the credentials match or not
+        let checkPassword = await bcrypt.compare(password, user.password);
+        if (!checkPassword){
+            res.status(400).json({error : "Enter correct credentials!!!"})
+        }
+
+        
 
 
+
+    } catch (error) {
+        // send the error message to the user
+        return res.status(500).json({ error: "Some Internal Error Occured!!!"});
+    }
+})
 
 
 module.exports = router
