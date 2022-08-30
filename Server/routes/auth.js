@@ -57,11 +57,10 @@ async(req, res)=>{
         res.json({authToken});
         
     } catch (err) {
+        // Send error to user
         return res.status(500).json({ error: err.message})
         
     }
-    
-    
 });
 
 
@@ -97,8 +96,11 @@ async(req, res)=>{
             user:{
                 id :user.id
             }
-        }
-        console.log(data);
+        };
+
+        // console.log(data);
+        // console.log(process.env.JWT_SECRET);
+
         const authToken = jwt.sign(data, process.env.JWT_SECRET)
 
         // Send the AuthToken to the User
@@ -110,7 +112,7 @@ async(req, res)=>{
         // send the error message to the user
         return res.status(500).json({ error: "Some Internal Error Occured!!!"});
     }
-})
+});
 
 
 module.exports = router
