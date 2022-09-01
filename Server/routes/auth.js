@@ -64,7 +64,7 @@ async(req, res)=>{
 });
 
 
-// Create a user using POST at "/api/auth/login". Doesnt require login
+// Authenticate using POST at "/api/auth/login". Doesnt require login
 
 router.post('/login', 
 [
@@ -113,6 +113,8 @@ async(req, res)=>{
         return res.status(500).json({ error: "Some Internal Error Occured!!!"});
     }
 });
+
+// 
 
 
 module.exports = router
