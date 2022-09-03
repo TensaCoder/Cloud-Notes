@@ -23,15 +23,14 @@ router.post('/add-note', fetchuser,
         body('description', 'Description should be atleast 8 character').isLength({ min: 8 })
     ],
     async (req, res) => {
-
         try {
             // Check if there are any errors in validating the user inputs
             const errors = validationResult(req);
             if (!errors.isEmpty()) {
                 return res.status(400).json({ errors: errors.array() });
             }
-            const {title, description, tag} = req.body;
-            
+            const { title, description, tag } = req.body;
+
             // Adds a new note to the Database
             const newNote = await Notes.create({
                 user: req.user.id,
@@ -39,14 +38,19 @@ router.post('/add-note', fetchuser,
                 description: description,
                 tag: tag
             })
-    
             res.send(newNote);
-            
+
         } catch (error) {
             console.error(error.message)
             res.status(500).send("Internal Server Error!!!")
         }
-
     });
+
+// 3: Update an existing note of a user using PUT /api/notes/update-note. Login Required
+router.put('/update-note/:id', fetchuser,
+    async(req, res) => {
+        const {title, description,tag} = req.body;
+    });
+
 
 module.exports = router
