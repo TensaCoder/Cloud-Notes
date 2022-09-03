@@ -1,14 +1,13 @@
-const Router = require('express')
+const Router = require('express');
 const router = Router();
+const fetchuser = require('../middleware/fetchuser');
+const Notes = require("../models/Notes")
 
-let obj1={
-    name : 'Herschel',
-    email: 'herschel.m@somaiya.edu',
-    password:'TensaZangetsu'
-}
-
-router.get('/', (req, res)=>{
-    res.json('Empty file!!!');
-})
+// 1: Fetches all notes of the particular user . Login Required
+router.get('/fetch-all-notes', fetchuser,
+    async (req, res) => {
+        const notes = await Notes.find({ user: req.user.id });
+        res.send(notes);
+    })
 
 module.exports = router
