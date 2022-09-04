@@ -50,6 +50,7 @@ router.post('/add-note', fetchuser,
 router.put('/update-note/:id', fetchuser,
     async(req, res) => {
         const {title, description,tag} = req.body;
+        
     });
 
 
