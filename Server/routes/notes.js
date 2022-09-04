@@ -48,9 +48,28 @@ router.post('/add-note', fetchuser,
 
 // 3: Update an existing note of a user using PUT /api/notes/update-note. Login Required
 router.put('/update-note/:id', fetchuser,
-    async(req, res) => {
-        const {title, description,tag} = req.body;
-        
+    async (req, res) => {
+        const { title, description, tag } = req.body;
+        let newNote = {};
+        // Check the the incoming req has any items that need to be updated
+        if (title) { newNote.title = title }
+        if (description) { newNote.description = description }
+        if (tag) { newNote.tag = tag }
+
+        // Will fetch the notes with the particular 'id' from the DB
+        const note = await Notes.findById(req.params.id)
+        if (!note) { return res.status(404).send("Not Found!!!") }
+
+        // Checks if the sign in user is accessing his own notes only
+        if (req.user.id !== notes.user.toString()) {
+            return res.status(401).send("Not Allowed!!!")
+        }
+
+        // Now the user is accessing his own notes and will finally update the notes
+        note = await Notes.findByIdAndUpdate(req.params.id, { $set: newNote }, { new: true })
+
+        res.json({note})
+
     });
 
 
