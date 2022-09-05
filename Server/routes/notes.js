@@ -57,7 +57,7 @@ router.put('/update-note/:id', fetchuser,
         if (tag) { newNote.tag = tag }
 
         // Will fetch the notes with the particular 'id' from the DB
-        const note = await Notes.findById(req.params.id)
+        let note = await Notes.findById(req.params.id)
         if (!note) { return res.status(404).send("Not Found!!!") }
 
         // Checks if the sign in user is accessing his own notes only
