@@ -57,23 +57,23 @@ router.put('/update-note/:id', fetchuser,
             if (title) { newNote.title = title }
             if (description) { newNote.description = description }
             if (tag) { newNote.tag = tag }
-    
+
             // Will fetch the notes with the particular 'id' from the DB
             let note = await Notes.findById(req.params.id)
             if (!note) { return res.status(404).send("Not Found!!!") }
-    
+
             // Checks if the sign in user is accessing his own notes only
             if (req.user.id !== note.user.toString()) {
                 return res.status(401).send("Not Allowed!!!")
             }
-    
+
             // Now the user is accessing his own notes and will finally update the notes
             note = await Notes.findByIdAndUpdate(req.params.id, { $set: newNote }, { new: true })
             // {$set: } - will only update the given values of the main object
             // {new : true } - will update the value directly in the mongoose object without again using .find()
-    
+
             res.json({ note })
-            
+
         } catch (error) {
             console.error(error.message)
             res.status(500).send("Internal Server Error!!!")
@@ -90,18 +90,18 @@ router.delete("/delete-note/:id", fetchuser,
             // Will fetch the notes with the particular 'id' from the DB
             let note = await Notes.findById(req.params.id)
             if (!note) { return res.status(404).send("Not Found!!!") }
-    
+
             // Checks if the sign in user is accessing his own notes only
             if (req.user.id !== note.user.toString()) {
                 return res.status(401).send("Not Allowed!!!")
             }
-    
+
             // find the note to be deleted using the note id and not the user id
             let deletedNote = await Notes.findByIdAndDelete(req.params.id) // this will delete the document and return it as well
             // let deletedNote = await Notes.deleteOne({_id : req.params.id})  // this will only delete the document but not return it
-    
+
             res.json({ deletedNote })
-            
+
         } catch (error) {
             console.error(error.message)
             res.status(500).send("Internal Server Error!!!")
