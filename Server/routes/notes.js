@@ -61,12 +61,14 @@ router.put('/update-note/:id', fetchuser,
         if (!note) { return res.status(404).send("Not Found!!!") }
 
         // Checks if the sign in user is accessing his own notes only
-        if (req.user.id !== notes.user.toString()) {
+        if (req.user.id !== note.user.toString()) {
             return res.status(401).send("Not Allowed!!!")
         }
 
         // Now the user is accessing his own notes and will finally update the notes
         note = await Notes.findByIdAndUpdate(req.params.id, { $set: newNote }, { new: true })
+        // {$set: } - will only update the given values of the main object
+        // {new : true } - will update the value directly in the mongoose object without again using .find()
 
         res.json({note})
 
