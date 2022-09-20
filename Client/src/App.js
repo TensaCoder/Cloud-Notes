@@ -3,15 +3,22 @@ import {
   BrowserRouter as Router,
   Switch,
   Route,
-  Link
+  Link,
+  Routes
 } from "react-router-dom";
 
 
 function App() {
   return (
-    <div className="App">
-      <h1>This is cloud notes app</h1>
-    </div>
+    <>
+    <Router>
+      <Switch>
+        <Routes exact path="/">
+          {/* Add Home component */}
+        </Routes>
+      </Switch>
+    </Router>
+    </>
   );
 }
 
