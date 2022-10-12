@@ -1,4 +1,4 @@
-// import react from "react";
+// import react from "react";        check y this is not working
 import NoteContext from "./NoteContext";
 
 const NoteState = (props) => {
