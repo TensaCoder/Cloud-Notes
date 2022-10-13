@@ -15,6 +15,12 @@ const NoteState = (props) => {
             description: "This is my second note",
             tag: "work",
         },
+        {
+            _id: "1234567",
+            title: "My second note",
+            description: "This is my second note",
+            tag: "work",
+        }
     ];
 
     return (
