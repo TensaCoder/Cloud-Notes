@@ -17,8 +17,8 @@ const NoteState = (props) => {
         },
         {
             _id: "1234567",
-            title: "My second note",
-            description: "This is my second note",
+            title: "My third note",
+            description: "This is my third note",
             tag: "work",
         }
     ];
