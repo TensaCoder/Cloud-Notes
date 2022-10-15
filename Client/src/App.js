@@ -8,6 +8,7 @@ import Home from './Components/Home';
 import Navbar from './Components/Navbar';
 import About from './Components/About';
 import NoteState from './Context/notes/NoteState';
+import Notes from './Components/Notes';
 
 
 function App() {
@@ -19,6 +20,7 @@ function App() {
         <Routes>
           <Route exact path="/" element={<Home />} />
           <Route exact path="/about" element={<About />} />
+          <Route exact path="/notes" element={<Notes />} />
         </Routes>
       </Router>
     </NoteState>
