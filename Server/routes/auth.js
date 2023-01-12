@@ -65,7 +65,7 @@ router.post('/create-user',
     });
 
 
-// Authenticate using POST at "/api/auth/login". Doesnt require login
+// Authenticate using POST at "/api/auth/login". Doesnt require auth
 
 router.post('/login',
     [
@@ -98,9 +98,6 @@ router.post('/login',
                     id: user.id
                 }
             };
-
-            // console.log(data);
-            // console.log(process.env.JWT_SECRET);
 
             const authToken = jwt.sign(data, process.env.JWT_Secret)
 

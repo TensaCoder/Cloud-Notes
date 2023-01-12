@@ -46,6 +46,7 @@ router.post('/add-note', fetchuser,
         }
     });
 
+    
 // 3: Update an existing note of a user using PUT /api/notes/update-note. Login Required
 router.put('/update-note/:id', fetchuser,
     async (req, res) => {
